@@ -3,10 +3,10 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 // import ScrollToTop from "./component/scrollToTop";
 
-import injectContext from "./store/appContext";
+import injectContext from "./store/appContext.jsx";
 
-import { Contacts } from "./views/Contacts.js";
-import { AddContact } from "./views/AddContact.js";
+import { Contacts } from "./views/Contacts.jsx";
+import { AddContact } from "./views/AddContact.jsx";
 
 export const Layout = () => {
 	return (
