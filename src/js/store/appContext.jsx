@@ -20,6 +20,7 @@ const injectContext = PassedComponent => {
 					})
 			})
 		);
+
 		async function getApi() {
 			try {
 				const response = await fetch("https://playground.4geeks.com/apis/fake/contact/agenda/fabian");

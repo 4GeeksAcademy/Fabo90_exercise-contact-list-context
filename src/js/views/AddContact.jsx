@@ -64,7 +64,7 @@ export const AddContact = () => {
 					<button type="button" className="btn btn-primary form-control" onClick={save}>
 						save
 					</button>
-					<Link className="mt-3 w-100 text-center" to="/">
+					<Link className="mt-3 w-100 text-center" to="/" onClick={actions.getApi()}>
 						or get back to contacts
 					</Link>
 				</form>

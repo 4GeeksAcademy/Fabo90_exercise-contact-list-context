@@ -47,8 +47,7 @@ const getState = ({ getStore, setStore }) => {
 						method: "DELETE",
 						headers: {
 							"Content-Type": "application/json"
-						},
-						body: JSON.stringify(deleteContact)
+						}
 					});
 					const json = await response.json();
 
@@ -62,7 +61,7 @@ const getState = ({ getStore, setStore }) => {
 					console.log(error);
 				}
 			},
-			updateApi: async (name, email, phone, address) => {
+			updateApi: async (name, email, phone, address, id) => {
 				let newContact = {
 					full_name: name,
 					email: email,
@@ -71,7 +70,7 @@ const getState = ({ getStore, setStore }) => {
 					phone: phone
 				};
 				try {
-					const response = await fetch("https://playground.4geeks.com/apis/fake/contact/", {
+					const response = await fetch("https://playground.4geeks.com/apis/fake/contact/" + id, {
 						method: "PUT",
 						headers: {
 							"Content-Type": "application/json"
@@ -86,6 +85,21 @@ const getState = ({ getStore, setStore }) => {
 					}
 
 					console.log(json);
+				} catch (error) {
+					console.log(error);
+				}
+			},
+			getApi: async function() {
+				try {
+					const response = await fetch("https://playground.4geeks.com/apis/fake/contact/agenda/fabian");
+					const json = await response.json();
+
+					if (!response.ok) {
+						console.log(response.statusText);
+						return;
+					}
+
+					setStore({ contacts: json });
 				} catch (error) {
 					console.log(error);
 				}
