@@ -20,6 +20,21 @@ const injectContext = PassedComponent => {
 					})
 			})
 		);
+		async function getApi() {
+			try {
+				const response = await fetch("https://playground.4geeks.com/apis/fake/contact/agenda/fabian");
+				const json = await response.json();
+
+				if (!response.ok) {
+					console.log(response.statusText);
+					return;
+				}
+
+				state.actions.getApiData(json);
+			} catch (error) {
+				console.log(error);
+			}
+		}
 
 		useEffect(() => {
 			/**
@@ -30,6 +45,7 @@ const injectContext = PassedComponent => {
 			 * state.loadSomeData(); <---- calling this function from the flux.js actions
 			 *
 			 **/
+			getApi();
 		}, []);
 
 		// the initial value for the context its not null anymore, but the current state of this component,

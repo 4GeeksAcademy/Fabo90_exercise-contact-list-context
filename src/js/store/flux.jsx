@@ -2,12 +2,95 @@ const getState = ({ getStore, setStore }) => {
 	return {
 		store: {
 			//Your data structures, A.K.A Entities
-			contacts: [
-				{ nombre: "fabian", telefono: 12544, direccion: "cra 123", email: "fafa@adfa.com" },
-				{ nombre: "Nicolas", telefono: 12544, direccion: "calle 123", email: "adfadf@.com" }
-			]
+			contacts: []
 		},
 		actions: {
+			getApiData: information => {
+				const store = getStore();
+
+				setStore({ contacts: information });
+			},
+			postApi: async (name, email, phone, address) => {
+				let newContact = {
+					full_name: name,
+					email: email,
+					agenda_slug: "fabian",
+					address: address,
+					phone: phone
+				};
+				try {
+					const response = await fetch("https://playground.4geeks.com/apis/fake/contact/", {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json"
+						},
+						body: JSON.stringify(newContact)
+					});
+					const json = await response.json();
+
+					if (!response.ok) {
+						console.log(response.statusText);
+						return;
+					}
+
+					console.log(json);
+				} catch (error) {
+					console.log(error);
+				}
+			},
+			deleteApi: async id => {
+				let deleteContact = {
+					id: id
+				};
+				try {
+					const response = await fetch("https://playground.4geeks.com/apis/fake/contact/" + id, {
+						method: "DELETE",
+						headers: {
+							"Content-Type": "application/json"
+						},
+						body: JSON.stringify(deleteContact)
+					});
+					const json = await response.json();
+
+					if (!response.ok) {
+						console.log(response.statusText);
+						return;
+					}
+
+					console.log(json);
+				} catch (error) {
+					console.log(error);
+				}
+			},
+			updateApi: async (name, email, phone, address) => {
+				let newContact = {
+					full_name: name,
+					email: email,
+					agenda_slug: "fabian",
+					address: address,
+					phone: phone
+				};
+				try {
+					const response = await fetch("https://playground.4geeks.com/apis/fake/contact/", {
+						method: "PUT",
+						headers: {
+							"Content-Type": "application/json"
+						},
+						body: JSON.stringify(newContact)
+					});
+					const json = await response.json();
+
+					if (!response.ok) {
+						console.log(response.statusText);
+						return;
+					}
+
+					console.log(json);
+				} catch (error) {
+					console.log(error);
+				}
+			}
+
 			//(Arrow) Functions that update the Store
 			// Remember to use the scope: scope.state.store & scope.setState()
 		}

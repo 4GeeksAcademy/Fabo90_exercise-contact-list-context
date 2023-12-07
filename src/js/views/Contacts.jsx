@@ -10,7 +10,6 @@ export const Contacts = () => {
 	const [state, setState] = useState({
 		showModal: false
 	});
-
 	return (
 		<div className="container">
 			<div>
@@ -21,15 +20,13 @@ export const Contacts = () => {
 				</p>
 				<div id="contacts" className="panel-collapse collapse show" aria-expanded="true">
 					<ul className="list-group pull-down" id="contact-list">
-						{/* 	<ContactCard onDelete={() => setState({ showModal: true })} />
-						<ContactCard /> */}
 						{store.contacts.map((contact, index) => (
 							<ContactCard
 								onDelete={() => setState({ showModal: true })}
 								key={index}
-								name={contact.nombre}
-								phone={contact.telefono}
-								address={contact.direccion}
+								name={contact.full_name}
+								phone={contact.phone}
+								address={contact.address}
 								email={contact.email}
 							/>
 						))}
