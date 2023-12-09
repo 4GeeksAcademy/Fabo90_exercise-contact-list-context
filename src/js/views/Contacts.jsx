@@ -13,7 +13,8 @@ export const Contacts = () => {
 		id: undefined
 	});
 	const [modalState, setModalState] = useState({
-		showModal: false
+		showModal: false,
+		id: undefined
 	});
 
 	return (
@@ -34,14 +35,18 @@ export const Contacts = () => {
 								phone={contact.phone}
 								address={contact.address}
 								email={contact.email}
-								onEdit={() => setModalState({ showModal: true })}
+								onEdit={() => setModalState({ showModal: true, id: contact.id })}
 							/>
 						))}
 					</ul>
 				</div>
 			</div>
 			<Modal show={state.showModal} id={state.id} onClose={() => setState({ showModal: false })} />
-			<EditModal show={modalState.showModal} onClose={() => setModalState({ showModal: false })} />
+			<EditModal
+				show={modalState.showModal}
+				id={modalState.id}
+				onClose={() => setModalState({ showModal: false })}
+			/>
 		</div>
 	);
 };

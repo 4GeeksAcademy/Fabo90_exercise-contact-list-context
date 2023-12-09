@@ -2,7 +2,8 @@ const getState = ({ getStore, setStore }) => {
 	return {
 		store: {
 			//Your data structures, A.K.A Entities
-			contacts: []
+			contacts: [],
+			contact: {}
 		},
 		actions: {
 			getApiData: information => {
@@ -58,43 +59,40 @@ const getState = ({ getStore, setStore }) => {
 
 					console.log(json);
 					const store = getStore();
-					/* store.contacts.filter((i, ind) => id != i.id);
+					/* store.contacts.filter((i, ind) => {
+						id[ind] != i;
+					});
 					setStore({ contacts: store.contacts }); */
+					/* setList(list.filter((i, ind) => index != ind))} */
 				} catch (error) {
 					console.log(error);
 				}
 			},
-			updateApi: async (name, email, phone, address, id) => {
-				let newContact = {
+			updateApi: (name, email, phone, address, id) => {
+				let contact = {
 					full_name: name,
 					email: email,
 					agenda_slug: "fabian",
 					address: address,
 					phone: phone
 				};
-				try {
-					const response = await fetch("https://playground.4geeks.com/apis/fake/contact/" + id, {
-						method: "PUT",
-						headers: {
-							"Content-Type": "application/json"
-						},
-						body: JSON.stringify(newContact)
-					});
-					const json = await response.json();
+				fetch("https://playground.4geeks.com/apis/fake/contact/" + id, {
+					method: "PUT",
+					body: JSON.stringify(contact),
+					headers: { "Content-Type": "application/json" }
+				})
+					.then(response => response.json())
+					.then(data => console.log(data))
+					.catch(error => console.log(error)); //
+			},
 
-					if (!response.ok) {
-						console.log(response.statusText);
-						return;
-					}
-
-					console.log(json);
-				} catch (error) {
-					console.log(error);
-				}
+			getIndividualContact: id => {
+				console.log(id);
+				fetch("https://playground.4geeks.com/apis/fake/contact/" + id)
+					.then(response => response.json())
+					/* .then(data => setStore({ contact: data })) */
+					.then(data => console.log(data));
 			}
-
-			//(Arrow) Functions that update the Store
-			// Remember to use the scope: scope.state.store & scope.setState()
 		}
 	};
 };

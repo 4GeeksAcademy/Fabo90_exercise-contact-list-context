@@ -1,11 +1,22 @@
 import React, { useState, useEffect, useContext } from "react";
 import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
+import { Context } from "../store/appContext.jsx";
 
 export const EditModal = props => {
 	const [state, setState] = useState({
 		//initialize state here
 	});
+	const [inputName, setInputName] = useState("");
+	const [inputEmail, setInputEmail] = useState("");
+	const [inputPhone, setInputPhone] = useState("");
+	const [inputAddress, setInputAddress] = useState("");
+
+	const { store, actions } = useContext(Context);
+
+	useEffect(() => {
+		actions.getIndividualContact(props.id);
+	}, []);
 
 	return (
 		<div className="modal" tabIndex="-1" role="dialog" style={{ display: props.show ? "inline-block" : "none" }}>
@@ -34,8 +45,8 @@ export const EditModal = props => {
 									type="text"
 									className="form-control"
 									placeholder="Full Name"
-									/* onChange={e => setInputName(e.target.value)}
-									value={inputName} */
+									onChange={e => setInputName(e.target.value)}
+									value={inputName}
 								/>
 							</div>
 							<div className="form-group">
@@ -44,8 +55,8 @@ export const EditModal = props => {
 									type="email"
 									className="form-control"
 									placeholder="Enter email"
-									/* onChange={e => setInputEmail(e.target.value)}
-									value={inputEmail} */
+									onChange={e => setInputEmail(e.target.value)}
+									value={inputEmail}
 								/>
 							</div>
 							<div className="form-group">
@@ -54,8 +65,8 @@ export const EditModal = props => {
 									type="phone"
 									className="form-control"
 									placeholder="Enter phone"
-									/* onChange={e => setInputPhone(e.target.value)}
-									value={inputPhone} */
+									onChange={e => setInputPhone(e.target.value)}
+									value={inputPhone}
 								/>
 							</div>
 							<div className="form-group">
@@ -64,8 +75,8 @@ export const EditModal = props => {
 									type="text"
 									className="form-control"
 									placeholder="Enter address"
-									/* onChange={e => setInputAddress(e.target.value)}
-									value={inputAddress} */
+									onChange={e => setInputAddress(e.target.value)}
+									value={inputAddress}
 								/>
 							</div>
 						</form>
@@ -78,8 +89,10 @@ export const EditModal = props => {
 							type="button"
 							className="btn btn-secondary"
 							data-dismiss="modal"
-							/* onClick={() => actions.deleteApi(props.id)} */
-						>
+							onClick={() => {
+								actions.updateApi(inputName, inputEmail, inputPhone, inputAddress, props.id);
+								props.onClose();
+							}}>
 							OK
 						</button>
 					</div>
@@ -96,10 +109,6 @@ EditModal.propTypes = {
 	id: PropTypes.string
 };
 
-/**
- * Define the default values for
- * your component's properties
- **/
 EditModal.defaultProps = {
 	show: false,
 	onClose: null
