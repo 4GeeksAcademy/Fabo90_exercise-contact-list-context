@@ -34,14 +34,14 @@ const getState = ({ getStore, setStore }) => {
 					}
 
 					console.log(json);
+					const store = getStore();
+					store.contacts.push(newContact);
+					setStore({ contacts: store.contacts });
 				} catch (error) {
 					console.log(error);
 				}
 			},
 			deleteApi: async id => {
-				let deleteContact = {
-					id: id
-				};
 				try {
 					const response = await fetch("https://playground.4geeks.com/apis/fake/contact/" + id, {
 						method: "DELETE",
@@ -57,6 +57,9 @@ const getState = ({ getStore, setStore }) => {
 					}
 
 					console.log(json);
+					const store = getStore();
+					/* store.contacts.filter((i, ind) => id != i.id);
+					setStore({ contacts: store.contacts }); */
 				} catch (error) {
 					console.log(error);
 				}
@@ -85,21 +88,6 @@ const getState = ({ getStore, setStore }) => {
 					}
 
 					console.log(json);
-				} catch (error) {
-					console.log(error);
-				}
-			},
-			getApi: async function() {
-				try {
-					const response = await fetch("https://playground.4geeks.com/apis/fake/contact/agenda/fabian");
-					const json = await response.json();
-
-					if (!response.ok) {
-						console.log(response.statusText);
-						return;
-					}
-
-					setStore({ contacts: json });
 				} catch (error) {
 					console.log(error);
 				}

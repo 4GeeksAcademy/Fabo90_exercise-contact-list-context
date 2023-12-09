@@ -4,10 +4,15 @@ import { Context } from "../store/appContext.jsx";
 
 import { ContactCard } from "../component/ContactCard.jsx";
 import { Modal } from "../component/Modal.jsx";
+import { EditModal } from "../component/EditModal.jsx";
 
 export const Contacts = () => {
 	const { store, actions } = useContext(Context);
 	const [state, setState] = useState({
+		showModal: false,
+		id: undefined
+	});
+	const [modalState, setModalState] = useState({
 		showModal: false
 	});
 
@@ -23,18 +28,20 @@ export const Contacts = () => {
 					<ul className="list-group pull-down" id="contact-list">
 						{store.contacts.map((contact, index) => (
 							<ContactCard
-								onDelete={() => setState({ showModal: true })}
+								onDelete={() => setState({ showModal: true, id: contact.id })}
 								key={index}
 								name={contact.full_name}
 								phone={contact.phone}
 								address={contact.address}
 								email={contact.email}
+								onEdit={() => setModalState({ showModal: true })}
 							/>
 						))}
 					</ul>
 				</div>
 			</div>
-			<Modal show={state.showModal} onClose={() => setState({ showModal: false })} />
+			<Modal show={state.showModal} id={state.id} onClose={() => setState({ showModal: false })} />
+			<EditModal show={modalState.showModal} onClose={() => setModalState({ showModal: false })} />
 		</div>
 	);
 };

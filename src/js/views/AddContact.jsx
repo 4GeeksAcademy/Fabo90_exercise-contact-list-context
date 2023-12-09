@@ -61,10 +61,19 @@ export const AddContact = () => {
 							value={inputAddress}
 						/>
 					</div>
-					<button type="button" className="btn btn-primary form-control" onClick={save}>
+					<button
+						type="button"
+						className="btn btn-primary form-control"
+						onClick={() => {
+							if (inputName != "" && inputEmail != "" && inputPhone != "" && inputAddress != "") {
+								save();
+							} else {
+								alert("Please fill out all input fields");
+							}
+						}}>
 						save
 					</button>
-					<Link className="mt-3 w-100 text-center" to="/" onClick={actions.getApi()}>
+					<Link className="mt-3 w-100 text-center" to="/">
 						or get back to contacts
 					</Link>
 				</form>
